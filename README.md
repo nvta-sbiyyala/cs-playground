@@ -4,5 +4,3 @@
 * Interview questions 
 * Libraries exploration
 * Tests/frameworks best practices
-
-	
