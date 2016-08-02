@@ -4,7 +4,7 @@ import java.util.Arrays;
  * Given an unsorted integer array, place all zeros to the end of the array without changing the sequence of non-zero
  * elements. (i.e. [1,3,0,8,12, 0, 4, 0,7] --> [1,3,8,12,4,7,0,0,0])
  */
-public class MoveZeroesInArrayToLeft {
+public class MoveZeroesInArrayToRight {
     public static void main(String[] args) {
         int[] arr = new int[]{1,3,0,8,12, 0, 4, 0,7};
         move(arr);
