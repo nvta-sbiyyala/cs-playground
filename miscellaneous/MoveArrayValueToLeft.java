@@ -27,6 +27,8 @@ public class MoveArrayValueToLeft {
             if (elem == x) count++;
         }
 
+        if (count == 0) return;
+
         // iterate from the last
         int lastIdx = arr.length-1;
         for (int i = arr.length-1; i >= 0; i--) {
