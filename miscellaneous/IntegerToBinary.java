@@ -35,18 +35,12 @@ public class IntegerToBinary {
      */
     private static String toBinary(int n) {
         Deque<Integer> stack = new ArrayDeque<>();
-        while (n > 1) {
+        while (n >= 1) {
             int rem = n % 2;
             n = n/2;
             stack.push(rem);
         }
-
-        if (n == 0) {
-            stack.push(n);
-        } else {
-            stack.push(1);
-        }
-
+        
         return stack
             .stream()
             .map(String::valueOf)
