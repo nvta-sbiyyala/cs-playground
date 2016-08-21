@@ -7,19 +7,19 @@ public class HeapSort {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int N = in.nextInt();
-        int[] inputElems1 = new int[N];
-        int[] inputElems2 = new int[N];
+        PQ pq = new PQ(N);
+        int[] inputElems = new int[N];
         for (int i = 0; i < N; i++) {
             int elem = in.nextInt();
-            inputElems1[i] = elem;
-            inputElems2[i] = elem;
+            inputElems[i] = elem;
+            pq.add(elem);
         }
 
-        sort(inputElems1);
-        heapSort(inputElems2);
-        assert(isSorted(inputElems1));
-        assert(isSorted(inputElems2));
-        assert(Arrays.equals(inputElems1, inputElems2));
+        heapSort(inputElems);
+        int[] pqSorted = pq.sort();
+        assert(isSorted(pqSorted));
+        assert(isSorted(inputElems));
+        assert(Arrays.equals(pqSorted, inputElems));
     }
 
     /**
@@ -35,20 +35,20 @@ public class HeapSort {
     }
     
     /**
-     * Use a [MIN] priority queue to maintain heap order
+     * Use a [MAX] priority queue from the collections api to maintain heap order
      * Remove the head one-by-one
      */
-    public static void sort(int[] elems) {
+    public static void sortUsingPQ(int[] elems) {
         // use a minPQ
-        PriorityQueue<Integer> Q = new PriorityQueue<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>((e1, e2) -> e2-e1);
         for (int elem : elems) {
-            Q.add(elem);
+            pq.add(elem);
         }
 
-        for (int i = 0; i < elems.length; i++) {
-            elems[i] = Q.remove();
+        for (int i = elems.length-1; i >= 0; i--) {
+            elems[i] = pq.remove();
         }
-    }
+    } 
 
     /**
      * Implement the 'sink' routine to maintain heap order
@@ -56,19 +56,24 @@ public class HeapSort {
     public static void heapSort(int[] elems) {
         int N = elems.length;
         for (int i = N/2; i >= 0; i--) {
-            sink(elems, i, N);
+            Utils.sink(elems, i, N);
         }
 
         while (N > 0) {
-            exch(elems, 0, --N);
-            sink(elems, 0, N);
+            Utils.exch(elems, 0, --N);
+            Utils.sink(elems, 0, N);
         }
     }
+
+}
+
+// Static method used by both PQ and regular heap sort
+class Utils {
 
     /**
      * Max heap invariant 
      */
-    private static void sink(int[] pq, int k, int N) {
+    public static void sink(int[] pq, int k, int N) {
         while (2*k <= N-1) {
             int j = 2*k;
             if (j < N-1 && less(pq, j, j+1)) j++;
@@ -78,14 +83,60 @@ public class HeapSort {
         }
     }
 
-    private static boolean less(int[] pq, int i , int j) {
+    public static void swim(int[] pq, int k, int N) {
+        // k/2, k
+        while (k > 0 && less(pq, k/2, k)) {
+            exch(pq, k, k/2);
+            k = k/2;
+        }
+    }
+
+    public static boolean less(int[] pq, int i , int j) {
         return pq[i] < pq[j];
     }
 
-    private static void exch(int[] pq, int i, int j) {
+    public static void exch(int[] pq, int i, int j) {
         int tmp = pq[i];
         pq[i] = pq[j];
         pq[j] = tmp;
     }
+    
+    
+}
 
+// A highly-stripped down, bare-bones Priority Queue implementation
+class PQ {
+
+    int[] pq;
+    int currentSize;
+    
+    public PQ(int size) {
+        pq = new int[size];
+        currentSize = 0;
+    }
+    
+    /**
+     * Add an element
+     */
+    public void add(int elem) {
+        // add at the currentSize position and increment
+        pq[currentSize] = elem;
+        Utils.swim(pq, currentSize, currentSize);
+        currentSize++;
+    }
+
+    /**
+     * Return a sorted copy of the array backing the PQ
+     */
+    public int[] sort() {
+        int N = currentSize;
+        int[] clone = pq.clone();
+        while (N > 0) {
+            Utils.exch(clone, 0, --N);
+            Utils.sink(clone, 0, N);
+        }
+
+        return clone;
+    }
+    
 }
