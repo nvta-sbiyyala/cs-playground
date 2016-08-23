@@ -8,3 +8,6 @@
    
 ### Enable assertions
 java -ea <.Class File>
+
+## Tech-Debt
+All the implementations are very c-style and declarative; the modern programming is fast moving towards functional programming, and such style is frowned upon. Especially the tree-problems have numerous null-checks and multiple exit points. TODO: Refactor using Java 8 constructs. 
