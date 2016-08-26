@@ -3,3 +3,5 @@
 2. Clean Code - R.C. Martin
 3. Gang of Four
 4. Analysis Patterns - Martin Fowler
+5. Domain Driven Design - Eric Evans
+
