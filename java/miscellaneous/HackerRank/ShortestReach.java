@@ -27,8 +27,6 @@ public class ShortestReach {
                     value_2.add(val_1);
                     adj.putIfAbsent(val_2, value_2);
                 });
-            // sort the values of the adj map
-            adj.forEach((k, v) -> Collections.sort(v));
             for (int  i = 1; i <= vertexCount; i++) {
                 if (i != source)
                     nodeList.add(i);
