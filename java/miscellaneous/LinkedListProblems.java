@@ -23,7 +23,45 @@ public class LinkedListProblems {
             tmpHead = tmpHead.next;
         }
 
-        printLinkedList(driver.iterativeReversal(head));
+        tmpHead.next = new Node(19);
+        tmpHead = tmpHead.next;
+        tmpHead.next = new Node(19);
+
+        //printLinkedList(driver.iterativeReversal(head));
+        System.out.println("==========================");
+        printLinkedList(head);
+        System.out.println("==========================");
+        printLinkedList(removeAll(head, 19));
+    }
+
+
+    /**
+     * Remove all occurrences of val and return head
+     */
+    public static Node removeAll(Node head, int value) {
+        if (head == null) {
+            return head;
+        }
+
+        Node curr = head;
+        Node prev = null;
+
+        while (curr != null) {
+            if (curr.value == value) {
+                if (curr == head) {
+                    head = head.next;
+                    curr = head;
+                } else {
+                    prev.next = curr.next;
+                    curr = curr.next;
+                }
+            } else {
+                prev = curr;
+                curr = curr.next;
+            }
+        }
+
+        return head;
     }
 
     public static void printLinkedList(Node head) {
