@@ -5,11 +5,11 @@ public class StackWithMiddle {
     
     public static void main(String[] args) {
 	Stack stack = new Stack();
+
 	stack.push(19);
 	printStack(stack.top);
 	assert(stack.size() == 1);
 	assert(stack.middle() == 19);
-
 	assert(stack.peek() == 19);
 
 	stack.push(1);
@@ -24,6 +24,32 @@ public class StackWithMiddle {
 	stack.push(118);
 	printStack(stack.top);
 	assert(stack.middle() == 1);
+
+	stack.pop();
+	assert(stack.middle() == 1);
+
+	stack.pop();
+	assert(stack.middle() == 19);
+
+	stack.push(3);
+	printStack(stack.top);
+	assert(stack.middle() == 1);
+	
+	stack.push(4);
+	printStack(stack.top);
+	assert(stack.middle() == 1);
+	
+	stack.push(5);
+	printStack(stack.top);
+	assert(stack.middle() == 3);
+	
+	stack.push(6);
+	printStack(stack.top);
+	assert(stack.middle() == 3);
+
+	stack.pop();
+	printStack(stack.top);
+	assert(stack.middle() == 3);
     }
 
     private static void printStack(Stack.Node head) {
@@ -33,13 +59,14 @@ public class StackWithMiddle {
 	    System.out.print(tmp.elem + " ");
 	    tmp = tmp.right;
 	}
-	System.out.println("\n===============");
+	System.out.println();
+	System.out.println("===============");
     }
     
 }
 
 /**
- * LinkedList-backed implementation of a stack
+ * Doubly LinkedList-backed implementation of a stack
  * int stack for simplicity
  * API: 1. push() 2. pop() 3. peek() 4. middle()
  */
@@ -85,8 +112,17 @@ class Stack {
 	    return -1;
 	
 	Node poppedNode = top;
-	top = top.right;
-	size -= 1;
+	top = top.right;	
+
+	if (size % 2 == 1) {
+	    if (size == 1) {
+		middle = top;
+	    } else {
+		middle = middle.right;
+	    }
+	}
+
+	size -= 1;	
 	
 	return poppedNode.elem;
     }
