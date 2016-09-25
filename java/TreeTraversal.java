@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * http://www.geeksforgeeks.org/618/
  */
-class TreeTraversal {
+public class TreeTraversal {
     public static class Node {
         Node left;
         Node right;
@@ -20,8 +20,23 @@ class TreeTraversal {
         }
     }
 
+    public static void printTreePreOrder(Node root) {
+        preorderTraversal(root);
+        System.out.println();
+    }
+
+    public static void printTreePreOrderIterative(Node root) {
+        preorderTraversalIterative(root);
+        System.out.println();
+    }
+
     public static void printTreeInOrder(Node root) {
         inorderTraversal(root);
+        System.out.println();
+    }
+
+    public static void printTreeInOrderIterative(Node root) {
+        inorderTraversalIterative(root);
         System.out.println();
     }
     
@@ -30,6 +45,11 @@ class TreeTraversal {
         System.out.println();
     }
 
+    public static void printTreePostOrderIterativeTwoStacks(Node root) {
+        postorderTraversalIterativeTwoStacks(root);
+        System.out.println();
+    }
+    
     private static void postorderTraversal(Node node) {
         if (node == null) {
             return;
@@ -38,6 +58,31 @@ class TreeTraversal {
         postorderTraversal(node.left);
         postorderTraversal(node.right);
         System.out.print(node.val + " ");
+    }
+
+    /**
+     * Iterative post order traversal
+     */
+    private static void postorderTraversalIterativeTwoStacks(Node root) {
+        if (root == null) {
+            return;
+        }
+
+        Deque<Node> stack1 = new ArrayDeque<>();
+        Deque<Node> stack2 = new ArrayDeque<>();
+        stack1.push(root);
+        while (!stack1.isEmpty()) {
+            Node poppedOutNode = stack1.pop();
+            stack2.push(poppedOutNode);
+            if (poppedOutNode.left != null)
+                stack1.push(poppedOutNode.left);
+            if (poppedOutNode.right != null)
+                stack1.push(poppedOutNode.right);
+        }
+
+        while (!stack2.isEmpty()) {
+            System.out.print(" " + stack2.pop().val);
+        }
     }
     
     private static void inorderTraversal(Node node) {
@@ -51,9 +96,47 @@ class TreeTraversal {
     }
 
     /**
-     * Non-recursive 
+     * Iterative in order traversal
      */
-    public static void preorderTraversal(Node root) {
+    private static void inorderTraversalIterative(Node root) {
+        if (root == null)
+            return;
+
+        Deque<Node> stack = new ArrayDeque<Node>();
+        Node node = root;
+        pushLeftNodesOntoStack(stack, node);
+        while (!stack.isEmpty()) {
+            Node poppedOutNode = stack.pop();
+            System.out.print(" " + poppedOutNode.val);
+            if (poppedOutNode.right != null) {
+                node = poppedOutNode.right;
+                pushLeftNodesOntoStack(stack, node);
+            }
+        }
+    }
+
+    /**
+     * Side Effects!
+     */
+    private static void pushLeftNodesOntoStack(Deque<Node> stack, Node node) {
+	
+        while (node != null) {
+            stack.push(node);
+            node = node.left;
+        }
+    }
+
+    public static void preorderTraversal(Node node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.print(node.val + " ");
+        preorderTraversal(node.left);
+        preorderTraversal(node.right);
+    }
+    
+    public static void preorderTraversalIterative(Node root) {
         Deque<Node> stack = new ArrayDeque<>();
         stack.add(root);
         
@@ -100,11 +183,22 @@ class TreeTraversal {
             numElems -= 2;
         }
 
-        System.out.println("Pre order:");
-        preorderTraversal(root);
-        System.out.println("In order:");
+        System.out.println("Pre order traversal:");
+        printTreePreOrder(root);
+
+        System.out.println("Pre order traversal iterative:");
+        printTreePreOrderIterative(root);
+        
+       System.out.println("In order traversal:");
         printTreeInOrder(root);
-        System.out.println("Post order:");
+
+        System.out.println("In order traversal iterative:");
+        printTreeInOrderIterative(root);
+        
+        System.out.println("Post order traversal:");
         printTreePostOrder(root);
+
+        System.out.println("Post order traversal using 2 stacks:");
+        printTreePostOrderIterativeTwoStacks(root);
     }
 }
