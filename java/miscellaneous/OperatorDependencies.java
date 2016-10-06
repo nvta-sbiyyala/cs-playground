@@ -13,6 +13,7 @@ import java.util.stream.*;
  * H G
  */
 public class OperatorDependencies {
+    
     public static void main(String[] args) {
         Map<String, Set<String>> mapping = generateOpsToDepsMap();
         List<String> path = new ArrayList<String>();
@@ -25,12 +26,15 @@ public class OperatorDependencies {
             .collect(Collectors.toSet());
         
         path.addAll(valSet
-                      .stream()
-                      .filter(x -> !keySet.contains(x))
-                      .collect(Collectors.toList()));
+                    .stream()
+                    .filter(x -> !keySet.contains(x))
+                    .collect(Collectors.toList()));
 
         computeValidPath(mapping, path);
-        System.out.println(path);
+        assert(isValidPath(generateOpsToDepsMap(), path));
+        assert(isValidPath(generateOpsToDepsMap(), Arrays.asList(new String[]{"D", "C", "F", "A", "E", "B", "G", "H"})));
+        assert(isValidPath(generateOpsToDepsMap(), Arrays.asList(new String[]{"F", "D", "C", "A", "E", "B", "G", "H"})));
+        assert(!isValidPath(generateOpsToDepsMap(), Arrays.asList(new String[]{"A", "D", "C", "F", "E", "B", "G", "H"})));
     }
 
     private static void computeValidPath(Map<String, Set<String>> mapping, List<String> path) {
@@ -68,5 +72,19 @@ public class OperatorDependencies {
         opToDeps.put("H", Stream.of("G").collect(Collectors.toSet()));
 
         return opToDeps;
+    }
+
+    private static boolean isValidPath(Map<String, Set<String>> mapping, List<String> path) {
+        Set<String> pathElems = new HashSet<>(path);
+        Set<String> removedElems = new HashSet<>();
+        for (String elem : path) {
+            Set<String> depSet = mapping.get(elem);
+            pathElems.remove(elem);
+            removedElems.add(elem);
+            if (depSet != null && !removedElems.containsAll(depSet)) 
+                return false;
+        }
+
+        return true;
     }
 }
