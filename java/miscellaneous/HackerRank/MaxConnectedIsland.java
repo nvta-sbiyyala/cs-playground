@@ -56,13 +56,13 @@ public class MaxConnectedIsland {
              int j,
              boolean[][] visited,
              Counter counter) {
-        int[] rowNbr = new int[] {-1, -1, 0, 0, 1, 1, 1};
-        int[] colNbr = new int[] {0, 1, -1, 1, -1, 0, 1};
-
+        
+        int[] rowNbr = new int[] {0, 1, 1, 1, 0, -1, -1, -1};
+        int[] colNbr = new int[] {1, 1, 0, -1, -1, -1, 0, 1};
         visited[i][j] = true;
         counter.inc();
 
-        for (int k = 0; k < 7; k++) {
+        for (int k = 0; k < 8; k++) {
             if (isSafe(grid, i + rowNbr[k], j + colNbr[k], visited)) {
                 dfs(grid, i + rowNbr[k], j + colNbr[k], visited, counter);
             }
