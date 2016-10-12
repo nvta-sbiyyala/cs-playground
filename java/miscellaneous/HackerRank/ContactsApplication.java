@@ -50,7 +50,7 @@ class TrieNode {
 
     Map<Character, TrieNode> childrenMap = new HashMap<>();
     boolean terminates;
-    int childCount = 1;
+    int childCount;
 
     public TrieNode() {
         // no-op
