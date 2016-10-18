@@ -18,11 +18,11 @@ public class ArrayLeftRotation {
             a[a_i] = in.nextInt();
         }
 
-        Arrays.asList(transform(a, n, k)).stream()
+        Arrays.asList(auxilaryTransform(a, n, k)).stream()
             .forEach(x -> System.out.print(x + " "));
     }
 
-    static Integer[] transform(Integer[] a, int n, int k) {
+    static Integer[] auxilaryTransform(Integer[] a, int n, int k) {
         k = k % n; // sentinel operation
         Integer[] aux = new Integer[a.length];
         for (int i = 0; i < n; i++) {

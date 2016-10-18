@@ -46,7 +46,7 @@ public class Denominations {
 	// fill the rest
 	for (int i = 1; i < target+1; i++) {
 	    for (int j = 0; j < numDenoms; j++) {
-		// Count number of solutions including S[j]
+		// Count number of solutions including denominationsArray[j]
 		int x = (i - denominationsArray[j] >= 0) ? result[i - denominationsArray[j]][j] : 0;
 
 		// Count of solutions excluding S[j]
