@@ -6,18 +6,6 @@ import java.util.regex.*;
 
 public class MaxConnectedIsland {
 
-    static class Counter {
-        private int count = 0;
-
-        public void inc() {
-            count += 1;
-        }
-
-        public int getCount() {
-            return count;
-        }
-    }
-
     final int n;
     final int m;
         
@@ -50,23 +38,25 @@ public class MaxConnectedIsland {
             (j >= 0) && (j < this.m) &&
             (grid[i][j] == 1) && (!visited[i][j]);
     }
-    
-    void dfs(int[][] grid,
+
+    // returns max count of subtree
+    int dfs(int[][] grid,
              int i,
              int j,
-             boolean[][] visited,
-             Counter counter) {
+             boolean[][] visited) {
         
         int[] rowNbr = new int[] {0, 1, 1, 1, 0, -1, -1, -1};
         int[] colNbr = new int[] {1, 1, 0, -1, -1, -1, 0, 1};
         visited[i][j] = true;
-        counter.inc();
-
+        int count = 1;
+        
         for (int k = 0; k < 8; k++) {
             if (isSafe(grid, i + rowNbr[k], j + colNbr[k], visited)) {
-                dfs(grid, i + rowNbr[k], j + colNbr[k], visited, counter);
+                count += dfs(grid, i + rowNbr[k], j + colNbr[k], visited);
             }
         }
+
+        return count;
     }
     
     public int countIslands(int[][] grid) {
@@ -76,7 +66,7 @@ public class MaxConnectedIsland {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (grid[i][j] == 1 && !visited[i][j]) {
-                    dfs(grid, i, j, visited, new Counter());
+                    dfs(grid, i, j, visited);
                     islandCount++;
                 }
             }
@@ -92,10 +82,9 @@ public class MaxConnectedIsland {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (grid[i][j] == 1 && !visited[i][j]) {
-                    Counter counter = new Counter();
-                    dfs(grid, i, j, visited, counter);
-                    if (arity < counter.getCount()) {
-                        arity = counter.getCount();
+                    int count = dfs(grid, i, j, visited);
+                    if (arity < count) {
+                        arity = count;
                     }
                 }
             }
