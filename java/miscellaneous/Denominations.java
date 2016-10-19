@@ -9,12 +9,12 @@ public class Denominations {
     static int counter  = 0;
     
     public static void main(String[] args) {
-	//int[] denominationsArray1 = new int[] {1,2,5,10};
-	int[] denominationsArray1 = new int[] {1, 2, 5, 10, 25, 50, 100, 150, 200, 250};
-	// 
-	assert(countUniqueCombinationsDP(denominationsArray1, denominationsArray1.length, 1000) == 476162330);
-	assert(countUniqueCombinationsDP(denominationsArray1, denominationsArray1.length, 1000) ==
-	       countUniqueCombinationsDPOptimized(denominationsArray1, denominationsArray1.length, 1000));
+        //int[] denominationsArray1 = new int[] {1,2,5,10};
+        int[] denominationsArray1 = new int[] {1, 2, 5, 10, 25, 50, 100, 150, 200, 250};
+        // 
+        assert(countUniqueCombinationsDP(denominationsArray1, denominationsArray1.length, 1000) == 476162330);
+        assert(countUniqueCombinationsDP(denominationsArray1, denominationsArray1.length, 1000) ==
+               countUniqueCombinationsDPOptimized(denominationsArray1, denominationsArray1.length, 1000));
     }
 
     /**
@@ -24,12 +24,12 @@ public class Denominations {
      * 2. solutions without a particular element
      */
     private static int countUniqueCombinationsRecursive(int[] denominationsArray, int numDenoms, int target) {
-	// base case
-	if (target == 0) return 1;
-	if ((numDenoms <= 0 && target > 0) || target < 0) return 0;
+        // base case
+        if (target == 0) return 1;
+        if ((numDenoms <= 0 && target > 0) || target < 0) return 0;
 
-	return countUniqueCombinationsRecursive(denominationsArray, numDenoms-1, target) +
-	    countUniqueCombinationsRecursive(denominationsArray, numDenoms, target-denominationsArray[numDenoms-1]);
+        return countUniqueCombinationsRecursive(denominationsArray, numDenoms-1, target) +
+            countUniqueCombinationsRecursive(denominationsArray, numDenoms, target-denominationsArray[numDenoms-1]);
     }
 
     /**
@@ -37,26 +37,26 @@ public class Denominations {
      * An array of size a[target+1][numDenoms]
      */
     private static int countUniqueCombinationsDP(int[] denominationsArray, int numDenoms, int target) {
-	// when target=0, #ways is always 1
-	int[][] result = new int[target+1][numDenoms];
+        // when target=0, #ways is always 1
+        int[][] result = new int[target+1][numDenoms];
 	
-	for (int i = 0; i < numDenoms; i++)
-	    result[0][i] = 1;
+        for (int i = 0; i < numDenoms; i++)
+            result[0][i] = 1;
 
-	// fill the rest
-	for (int i = 1; i < target+1; i++) {
-	    for (int j = 0; j < numDenoms; j++) {
-		// Count number of solutions including denominationsArray[j]
-		int x = (i - denominationsArray[j] >= 0) ? result[i - denominationsArray[j]][j] : 0;
+        // fill the rest
+        for (int i = 1; i < target+1; i++) {
+            for (int j = 0; j < numDenoms; j++) {
+                // Count number of solutions including denominationsArray[j]
+                int x = (i - denominationsArray[j] >= 0) ? result[i - denominationsArray[j]][j] : 0;
 
-		// Count of solutions excluding S[j]
-		int y = (j >= 1) ? result[i][j-1] : 0;
+                // Count of solutions excluding S[j]
+                int y = (j >= 1) ? result[i][j-1] : 0;
 
-		result[i][j] = x + y;
-	    }
-	}
+                result[i][j] = x + y;
+            }
+        }
 
-	return result[target][numDenoms-1];
+        return result[target][numDenoms-1];
     }
 
     /**
@@ -65,18 +65,18 @@ public class Denominations {
      * Every element represents number of solutions 
      */
     private static int countUniqueCombinationsDPOptimized(int[] denominationsArray, int numDenoms, int target) {
-	int[] result = new int[target+1];
+        int[] result = new int[target+1];
 
-	result[0] = 1;
+        result[0] = 1;
 
-	// fill the rest
-	for (int i = 0; i < numDenoms; i++) {
-	    for (int j = denominationsArray[i]; j < target+1; j++) {
-		result[j] += result[j - denominationsArray[i]];
-	    }
-	}
+        // fill the rest
+        for (int i = 0; i < numDenoms; i++) {
+            for (int j = denominationsArray[i]; j < target+1; j++) {
+                result[j] += result[j - denominationsArray[i]];
+            }
+        }
 
-	return result[target];
+        return result[target];
     }
     
 }
