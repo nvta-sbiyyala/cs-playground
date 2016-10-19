@@ -64,11 +64,11 @@ public class Denominations {
      * Avoiding auxiliary space
      * Every element represents number of solutions 
      */
-    private static int countUniqueCombinationsDPOptimized(int[] denominationsArray, int numDenoms, int target) {
-        int[] result = new int[target+1];
-
+    private static long countUniqueCombinationsDPOptimized(int[] denominationsArray, int numDenoms, int target) {
+        long[] result = new long[target+1];
+        
         result[0] = 1;
-
+        
         // fill the rest
         for (int i = 0; i < numDenoms; i++) {
             for (int j = denominationsArray[i]; j < target+1; j++) {
