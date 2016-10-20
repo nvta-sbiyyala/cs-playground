@@ -9,7 +9,11 @@
 *.jar
 *.war
 *.ear
-
+*.log
+*doc.md
+rules.md
+ms/*
+*prep.org
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
