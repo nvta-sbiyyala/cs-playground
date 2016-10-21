@@ -1,8 +1,9 @@
-/*
- * This function can be invoked any number of times with integer parameters,
- *  it is only when it is invoked with no parameters that the sum is returned; 
- */
 module.exports = {
+
+  /*
+   * This function can be invoked any number of times with integer parameters,
+   *  it is only when it is invoked with no parameters that the sum is returned; 
+   */
   sum: function(...elems) {
     let total = elems.slice();
     const add = (a, b) => a+b;
