@@ -74,17 +74,19 @@ public class OperatorDependencies {
         return opToDeps;
     }
 
+    // Not quite functional, still has side-effects
     private static boolean isValidPath(Map<String, Set<String>> mapping, List<String> path) {
+
         Set<String> pathElems = new HashSet<>(path);
         Set<String> removedElems = new HashSet<>();
-        for (String elem : path) {
-            Set<String> depSet = mapping.get(elem);
-            pathElems.remove(elem);
-            removedElems.add(elem);
-            if (depSet != null && !removedElems.containsAll(depSet)) 
-                return false;
-        }
+        Optional<String> resultBoolean = path.stream()
+            .filter(elem -> {
+                    Set<String> depSet = mapping.get(elem);
+                    pathElems.remove(elem);
+                    removedElems.add(elem);
+                    return (depSet != null && !removedElems.containsAll(depSet));
+                }).findFirst();
 
-        return true;
+        return !resultBoolean.isPresent();
     }
 }
