@@ -1,0 +1,34 @@
+{
+  "name": "miscellaneous",
+  "version": "1.0.0",
+  "description": "random interesting problems",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sbiyyala/cs-playground.git"
+  },
+  "keywords": [
+    "javascript",
+    "node"
+  ],
+  "author": "Shishir Biyyala",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sbiyyala/cs-playground/issues"
+  },
+  "homepage": "https://github.com/sbiyyala/cs-playground#readme",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  },
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.17.0",
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  }
+}
