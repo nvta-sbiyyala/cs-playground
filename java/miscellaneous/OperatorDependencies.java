@@ -79,14 +79,13 @@ public class OperatorDependencies {
 
         Set<String> pathElems = new HashSet<>(path);
         Set<String> removedElems = new HashSet<>();
-        Optional<String> resultBoolean = path.stream()
-            .filter(elem -> {
+        return !path.stream()
+            .anyMatch(elem -> {
                     Set<String> depSet = mapping.get(elem);
                     pathElems.remove(elem);
                     removedElems.add(elem);
                     return (depSet != null && !removedElems.containsAll(depSet));
-                }).findFirst();
+                });
 
-        return !resultBoolean.isPresent();
     }
 }
