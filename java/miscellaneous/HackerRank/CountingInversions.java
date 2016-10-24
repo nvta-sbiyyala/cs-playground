@@ -1,46 +1,30 @@
-import java.io.*;
-import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
-
 public class CountingInversions {
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int t = in.nextInt();
-        for(int a0 = 0; a0 < t; a0++){
-            int n = in.nextInt();
-            Integer arr[] = new Integer[n];
-            for(int arr_i=0; arr_i < n; arr_i++) {
-                arr[arr_i] = in.nextInt();
-            }
-
-            assert(countInversions(new Integer[] {2, 1, 3, 1, 2}) == 5);
-            assert(countInversions(new Integer[] {1, 2, 4}) == 0);
-            assert(countInversions(new Integer[] {2, 4, 1}) == 0);
-        }
+        assert(countInversions(new Integer[] {2, 1, 3, 1, 2}) == 4);
+        assert(countInversions(new Integer[] {1, 2, 4}) == 0);
+        assert(countInversions(new Integer[] {2, 4, 1}) == 2);
     }
 
     private static long countInversions(Integer[] arr) {
         Integer[] aux = new Integer[arr.length];
-        return sort(arr, aux, 0, arr.length-1);
+        return countInversionsWhileSorting(arr, aux, 0, arr.length-1);
     }
 
-    private static long sort(Integer[] arr, Integer[] aux, int lo, int hi) {
+    private static long countInversionsWhileSorting(Integer[] arr, Integer[] aux, int lo, int hi) {
         
         if (hi <= lo) return 0;
 
         long count = 0;
         int mid = (lo + hi)/2;
-        count += sort(arr, aux, lo, mid);
-        count += sort(arr, aux, mid+1, hi);
-        count += merge(arr, aux, lo, hi);
+        count += countInversionsWhileSorting(arr, aux, lo, mid);
+        count += countInversionsWhileSorting(arr, aux, mid+1, hi);
+        count += countInversionsWhileMerging(arr, aux, lo, hi);
         
         return count;
     }
 
-    private static long merge(Integer[] arr, Integer[] aux, int lo, int hi) {
+    private static long countInversionsWhileMerging(Integer[] arr, Integer[] aux, int lo, int hi) {
 
         for (int k = lo; k <= hi; k++) {
             aux[k] = arr[k]; 
