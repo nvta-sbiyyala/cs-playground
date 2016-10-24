@@ -29,6 +29,7 @@ public class RansomNote {
     private static boolean process(Map<String, Integer> magazineMap, Map<String, Integer> ransomMap) {
         return !ransomMap.entrySet()
             .stream()
-            .anyMatch(map -> !magazineMap.containsKey(map.getKey()) || map.getValue() > (magazineMap.get(map.getKey())));
+            .anyMatch(entry -> !magazineMap.containsKey(entry.getKey()) ||
+                      entry.getValue() > (magazineMap.get(entry.getKey())));
     }
 }
