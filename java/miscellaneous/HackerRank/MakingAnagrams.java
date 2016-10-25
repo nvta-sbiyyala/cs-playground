@@ -13,13 +13,13 @@ public class MakingAnagrams {
         int firstNumNeeded = firstMap.entrySet()
             .stream()
             .filter(x -> !secondMap.containsKey(x.getKey()))
-            .mapToInt(x -> x.getValue().intValue())
+            .mapToInt(x -> x.getValue())
             .sum();
 
         int secondNumNeeded = secondMap.entrySet()
             .stream()
             .filter(x -> !firstMap.containsKey(x.getKey()))
-            .mapToInt(x -> x.getValue().intValue())
+            .mapToInt(x -> x.getValue())
             .sum();
 
         int commonNumNeeded = firstMap.entrySet()
