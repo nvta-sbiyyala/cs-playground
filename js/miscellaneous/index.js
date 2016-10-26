@@ -10,7 +10,7 @@ module.exports = {
     
     return function _internalSum(...next) {
       if (next.length == 0) {
-	return total.reduce(add, 0);
+      	return total.reduce(add, 0);
       }
 
       total = total.concat(next);
