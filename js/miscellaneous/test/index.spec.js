@@ -13,3 +13,14 @@ expect(foo).to.be.a('string');
 expect(foo).to.equal('bar');
 expect(foo).to.have.length(3);
 expect(beverages).to.have.property('tea').with.length(3);
+
+function fiboClient(num) {
+  for (num of utils.getFibonacci()) {
+    if (num > 100) {
+      break;
+    }
+    console.log(num);
+  }
+}
+
+fiboClient(90);

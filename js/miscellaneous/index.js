@@ -16,5 +16,16 @@ module.exports = {
       total = total.concat(next);
       return _internalSum;
     }
+  },
+  getFibonacci: function*() {
+    yield a = 0;
+    b = 1;
+    
+    while (true) {
+      yield b;
+      b = a + b;
+      a = b - a;
+    }
   }
+
 }
