@@ -18,7 +18,7 @@ public class LuckBalance {
             int li = in.nextInt();
             int ti = in.nextInt();
         
-            mapping.compute(ti, (k, v) -> process(v, li));                
+            mapping.compute(ti, (k, v) -> process(v, li));
         }
 
         System.out.println(computeLuck(mapping, K));        
