@@ -32,7 +32,9 @@ public class LuckBalance {
         Collections.sort(impSet, (e1, e2) -> e2.compareTo((Integer) e1));
         Collections.sort(unimpSet, (e1, e2) -> e2.compareTo((Integer) e1));
         
-        return impSet.stream().mapToInt(Integer::intValue).limit(K).sum() - impSet.stream().skip(K).mapToInt(i -> i).sum() + unimpSet.stream().mapToInt(i -> i).sum();
+        return impSet.stream().mapToInt(Integer::intValue).limit(K).sum() -
+            impSet.stream().skip(K).mapToInt(i -> i).sum() +
+            unimpSet.stream().mapToInt(i -> i).sum();
 
     }
 
