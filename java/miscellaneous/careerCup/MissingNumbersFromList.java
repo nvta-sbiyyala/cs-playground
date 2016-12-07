@@ -11,9 +11,31 @@ import java.util.stream.*;
 public class MissingNumbersFromList {
 
     static final int LIMIT = 100;
-    public static void main(String[] args) {
-        int[] array = new int[] {0, 1, 2, 50, 52, 75, 91, 93};
-        System.out.println(compute(array));
+    public static void main(String[] args) {        
+        test();
+    }
+
+    static void test() {
+        String missing = compute(new int[]{5});
+        assert(missing.equals("0-4,6-99"));
+ 
+        missing = compute(new int[]{0});
+        assert(missing.equals("1-99"));
+ 
+        missing = compute(new int[]{99});
+        assert(missing.equals("0-98"));
+ 
+        missing = compute(new int[]{3, 5});
+        assert(missing.equals("0-2,4,6-99"));
+ 
+        missing = compute(new int[]{3, 5, 10, 11, 13, 17});
+        assert(missing.equals("0-2,4,6-9,12,14-16,18-99"));
+        
+        missing = compute(new int[]{0, 1, 2, 50, 52, 75, 91, 93});
+        assert(missing.equals("3-49,51,53-74,76-90,92,94-99"));
+
+        missing = compute(new int[]{0, 1, 2, 50, 52, 75});
+        assert(missing.equals("3-49,51,53-74,76-99"));
     }
 
     static int getEndIdx(int[] array, int idx) {
@@ -47,9 +69,9 @@ public class MissingNumbersFromList {
                     sb.append(endIdx);
                 }
 
-                if (endIdx != LIMIT-1)
+                if (endIdx < LIMIT-2) 
                     sb.append(",");
-                
+
                 i = endIdx;
             }
         }
