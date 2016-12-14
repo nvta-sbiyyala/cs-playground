@@ -31,6 +31,7 @@ public class IsSquare {
         Point d = Point.newPoint(0, -4);
         
         assert(isSquare(a, b, c, d));
+        assert(isSquare(d, c, b, a));
         assert(isSquare(a, c, b, d));
         assert(isSquare(a, d, c, b));
 
