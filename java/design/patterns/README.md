@@ -5,3 +5,7 @@
 4. Analysis Patterns - Martin Fowler
 5. Domain Driven Design - Eric Evans
 
+# TODO:
+1. https://dzone.com/articles/strategy-pattern-using-lambda
+2. 
+
