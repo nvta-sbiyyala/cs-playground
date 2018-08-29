@@ -1,17 +1,5 @@
 /* describe */
 
-function compute(compareWith, toCompare) {
-    if (compareWith[1] >= toCompare[0]) {
-        if (compareWith[1] >= toCompare[1]) {
-            return [compareWith];
-        } else {
-            return [[compareWith[0], toCompare[1]]];
-        }
-    } else {
-        return [compareWith, toCompare];
-    }
-}
-
 const scenarios = [
     {
         description: 'first case',
@@ -40,17 +28,34 @@ const scenarios = [
     }
 ];
 
-describe('Wrapper', () => {
+function mergeIntervals(input) {
+
+    const compute = (compareWith, toCompare) => {
+        if (compareWith[1] >= toCompare[0]) {
+            if (compareWith[1] >= toCompare[1]) {
+                return [compareWith];
+            } else {
+                return [[compareWith[0], toCompare[1]]];
+            }
+        } else {
+            return [compareWith, toCompare];
+        }
+    };
+
+    input.sort((e1, e2) => e1[0] - e2[0]);
+    let result = [input[0]];
+    for (let i = 1; i < input.length; i++) {
+        const computed = compute(result.pop(), input[i]);
+        result = result.concat(computed);
+    }
+    return result;
+}
+
+describe('Given merge Intervals function', () => {
     scenarios.forEach(({description, input, output}) => {
         describe(`Given ${description}`, () => {
             it('Then result', () => {
-                input.sort((e1, e2) => e1[0] - e2[0]);
-                let result = [input[0]];
-                for (let i = 1; i < input.length; i++) {
-                    const computed = compute(result.pop(), input[i]);
-                    result = result.concat(computed);
-                }
-                expect(result).toEqual(output);
+                expect(mergeIntervals(input)).toEqual(output);
             });
         });
     });
